@@ -1,1 +1,20 @@
 /.metadata/
+
+#Ignore build folders
+kv_project/bin/
+kv_project/obj/
+kv_project/lib/
+
+#Ignore specific folders
+.settings/
+.cproject
+.project
+
+#Ignore all .o, .exe &  .a files
+*.o
+*.exe
+*.a
+
+#Ignore backup
+*~
+*.bak
