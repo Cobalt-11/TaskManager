@@ -4,9 +4,12 @@
 kv_project/bin/
 kv_project/obj/
 kv_project/lib/
+kv_project/Debug
+kv_project/Release/
+
 
 #Ignore specific folders
-kv_project/.settings/
+.settings/
 .cproject
 .project
 
@@ -14,7 +17,7 @@ kv_project/.settings/
 *.o
 *.exe
 *.a
-
+*.log
 #Ignore backup
 *~
 *.bak
