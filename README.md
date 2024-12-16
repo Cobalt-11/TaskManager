@@ -40,3 +40,10 @@ Dodatne funkcionalnosti (ako ostane vremena):
 * lib/ (statička biblioteka)
 * obj/ (objektne datoteke)
 * bin/ (izvršna datoteka)
+---
+## To-Do Lista:
+- [x] **Napravljen header file circular_buffer** 
+- [ ] **Napraviti header za task_manager**
+- [ ] **.**
+
+
