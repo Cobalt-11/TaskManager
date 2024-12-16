@@ -6,7 +6,7 @@ kv_project/obj/
 kv_project/lib/
 
 #Ignore specific folders
-.settings/
+kv_project/.settings/
 .cproject
 .project
 
