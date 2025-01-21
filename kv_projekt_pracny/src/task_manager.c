@@ -114,7 +114,7 @@ void selectTask(circular_buffer *cb, int taskIndex, Task *selectedTask) {
         int choice;
         if (scanf("%d", &choice) != 1) {
             printf("Nevažeći unos. Pokušajte ponovo.\n");
-            return; // Or take some other appropriate action to handle the error
+            return;
         }
 
         switch (choice) {
@@ -127,7 +127,8 @@ void selectTask(circular_buffer *cb, int taskIndex, Task *selectedTask) {
                 }
                 break;
             case 2:
-                deleteTask(cb, taskIndex);
+                //deleteTask(cb, taskIndex);
+            	printf("Nije jos implementirano");
                 return; // Exit after deleting the task
             case 3:
                 return; // Exit to the previous menu
@@ -255,17 +256,17 @@ void sortTasksByPriority(circular_buffer *cb) {
 //Funckije za spremanje i učitavanje Task-ova iz file-a
 void saveTasksToFile(circular_buffer *cb, const char *filename) {
     if (isEmpty(cb)) {
-        printf("Buffer is empty. Nothing to save.\n");
+        printf("Nema zadataka u bufferu.\n");
         return;
     }
 
-    FILE *file = fopen(filename, "w");  // Open the file in write mode
+    FILE *file = fopen(filename, "w");  //Otvara file u "write" modu
     if (file == NULL) {
-        printf("Could not open file for saving tasks.\n");
+        printf("Nemoguce otvoriti file!\n");
         return;
     }
 
-    // Write each task to the file
+    // Zapis svih novih taskova
     int index = cb->tail;
     for (int i = 0; i < cb->elementCounter; i++) {
         Task *task = &cb->tasks[index];
@@ -276,6 +277,29 @@ void saveTasksToFile(circular_buffer *cb, const char *filename) {
     fclose(file);
     printf("Tasks saved to file successfully.\n");
 }
+/* POTREBNO IMPLEMENTIRATI
+void deleteFromFile(circular_buffer *cb, const char *filename, int index) {
+	if (isEmpty(cb)) {
+		printf("Nema zadataka u bufferu.\n");
+		return;
+	}
+	FILE *tempFile;
+	char temp[] = "temp.txt";
+	char str[MAX_BUFFER_SIZE];
+
+	FILE *file = fopen(filename, "r");
+	tempFile = fopen(temp, "w");
+
+	while (!feof(file)) {
+		strcpy(str, "\0");
+		fgets(str, MAX_BUFFER_SIZE, file);
+		if(!feof(file)) {
+
+		}
+	}
+
+
+}*/
 
 void loadTasksFromFile(circular_buffer *cb, const char *filename) {
     FILE *file = fopen(filename, "r");  // Open the file in read mode
