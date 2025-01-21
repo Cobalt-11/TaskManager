@@ -28,8 +28,8 @@ typedef struct{
 
 	taskStruct tStruct[MAX_BUFFER_SIZE];
 	int elementCounter;
-	void *head; //pointer to head
-	void *tail; //pointer to tail
+	int head; //pointer to head
+	int tail; //pointer to tail
 	} circular_buffer;
 
 //Inicijalizira strukturu
