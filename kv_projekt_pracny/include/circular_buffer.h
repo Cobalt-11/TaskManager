@@ -14,29 +14,33 @@ typedef enum {
 typedef enum {
 	ACTIVE	 = 1,
 	FINISHED = 2
-	 } taskStatus;
+	 } TaskStatus;
 
 typedef struct  {
 	char title[MAX_TITLE_LENGTH];
 	priorityLevel priority;
 	short day;
 	short month;
-	taskStatus status;
-	} taskStruct;
+	TaskStatus status;
+	} Task;
 
 typedef struct{
 
-	taskStruct tStruct[MAX_BUFFER_SIZE];
+	Task tasks[MAX_BUFFER_SIZE];
 	int elementCounter;
 	int head; //pointer to head
 	int tail; //pointer to tail
 	} circular_buffer;
 
+
+//Pomocna funkcija da mi pretvori enum brojve u string (tj. da mi vrati ime varijable)
+const char* getStatusString(TaskStatus tStatus);
+
 //Inicijalizira strukturu
 void initialize(circular_buffer *cb);
 
 //Dodaje element u strukturu
-void addElement(circular_buffer *cb, taskStruct *ts);
+void addElement(circular_buffer *cb, Task *ts);
 
 //Mice element iz strukture
 void removeElement(circular_buffer *cb, int isRemoved);
