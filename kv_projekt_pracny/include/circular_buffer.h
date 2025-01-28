@@ -42,9 +42,6 @@ void initialize(circular_buffer *cb);
 //Dodaje element u strukturu
 void addElement(circular_buffer *cb, Task *ts);
 
-//Mice element iz strukture
-void removeElement(circular_buffer *cb, int isRemoved);
-
 //Provjerava da li je struktura prazna
 int isEmpty(circular_buffer *cb);
 
@@ -53,6 +50,8 @@ int isFull(circular_buffer *cb);
 
 //Ispisuje buffer tj.strukturu
 void printBuffer(circular_buffer *cb);
+
+void clearBuffer(circular_buffer *cb);
 
 #endif
 //End header guard

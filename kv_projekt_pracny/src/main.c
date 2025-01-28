@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include <stdlib.h>  // Dodano za funkciju system()
 #include "task_manager.h"
 
@@ -27,9 +28,23 @@ int main() {
             case 3:
                 // Save tasks to file before exiting
                 saveTasksToFile(&cb, "tasks.txt");
-                printf("Exiting program...\n");
+                printf("Izlazak iz programa...\n");
                 return 0;
-            case 4:
+            case 4: {
+                char confirm[3];  // Array to hold user input ("da" or "ne")
+                printf("Da li sigurno hoćeš obrisati sve? Upiši da/ne: ");
+                scanf("%s", confirm);
+
+                // Check the user's input
+                if (strcmp(confirm, "da") == 0) {
+                    clearBuffer(&cb);  // Clear the buffer
+                    printf("Buffer je izpražnjen\n");
+                } else {
+                    printf("Povratak na glavni izbornik.\n");
+                }
+                break;  // Ensure we don't fall through to the next case
+                }
+            case 5:
                 printf("Izlaz iz programa.\n");
                 return 0;
             default:

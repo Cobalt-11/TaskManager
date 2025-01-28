@@ -89,3 +89,31 @@ int getCount(circular_buffer *cb) {
 }
 
 
+#include <stdio.h>
+
+void clearBuffer(circular_buffer *cb) {
+    // Reset the buffer
+    cb->head = 0;
+    cb->tail = 0;
+    cb->elementCounter = 0;
+
+    // Open the file in write mode to truncate its contents (but not delete the file)
+    FILE *file = fopen("tasks.txt", "w");
+    if (file == NULL) {
+        printf("Error opening file tasks.txt\n");
+        return;
+    }
+    fclose(file);  // Just close the file to clear its contents
+
+    // Now delete the file
+    if (remove("tasks.txt") == 0) {
+        printf("Tasks deleted successfully.\n");
+    } else {
+        printf("Error deleting tasks\n");
+    }
+
+    // Assuming TRUE indicates successful operation
+    printf("Buffer cleared and tasks deleted.\n");
+}
+
+

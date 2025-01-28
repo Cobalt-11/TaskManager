@@ -15,7 +15,8 @@ void showMainMenu() {
     printf("1. Dodaj novi zadatak\n");
     printf("2. Prikaži zadatke\n");
     printf("3. Spremi u tasks.txt\n");
-    printf("4. Izlaz\n");
+    printf("4. Očisti buffer.\n");
+    printf("5. Izlaz\n");
     printf("=======================\n");
     printf("Odabir: ");
 }
@@ -127,8 +128,8 @@ void selectTask(circular_buffer *cb, int taskIndex, Task *selectedTask) {
                 }
                 break;
             case 2:
-                //deleteTask(cb, taskIndex);
-            	printf("Nije jos implementirano");
+                deleteTask(cb, taskIndex);
+            	printf("Zadatak uspješno obrisan");
                 return; // Exit after deleting the task
             case 3:
                 return; // Exit to the previous menu
@@ -155,33 +156,7 @@ void markTaskCompleted(Task *task) {
     
 }
 
-void deleteTask(circular_buffer *cb, int taskIndex) {
-    if (isEmpty(cb)) {
-        printf("Nema zadataka u bufferu.\n");
-        return;
-    }
 
-    // Validate taskIndex
-    if (taskIndex < 1 || taskIndex > cb->elementCounter) {
-        printf("Nevažeći indeks zadatka.\n");
-        return;
-    }
-
-    // Find the actual index in the buffer
-    int actualIndex = (cb->head + taskIndex - 1) % MAX_BUFFER_SIZE;
-
-    // Shift all tasks after the deleted task
-    for (int i = actualIndex; i != cb->tail; i = (i + 1) % MAX_BUFFER_SIZE) {
-        int nextIndex = (i + 1) % MAX_BUFFER_SIZE;
-        cb->tasks[i] = cb->tasks[nextIndex];
-    }
-
-    // Adjust the tail pointer and element count
-    cb->tail = (cb->tail - 1 + MAX_BUFFER_SIZE) % MAX_BUFFER_SIZE;
-    cb->elementCounter--;
-
-    printf("Zadatak na indeksu %d je obrisan.\n", taskIndex);
-}
 
 // POMOCNE FUNKCIJE
 
@@ -277,29 +252,38 @@ void saveTasksToFile(circular_buffer *cb, const char *filename) {
     fclose(file);
     printf("Tasks saved to file successfully.\n");
 }
-/* POTREBNO IMPLEMENTIRATI
-void deleteFromFile(circular_buffer *cb, const char *filename, int index) {
-	if (isEmpty(cb)) {
-		printf("Nema zadataka u bufferu.\n");
-		return;
-	}
-	FILE *tempFile;
-	char temp[] = "temp.txt";
-	char str[MAX_BUFFER_SIZE];
-
-	FILE *file = fopen(filename, "r");
-	tempFile = fopen(temp, "w");
-
-	while (!feof(file)) {
-		strcpy(str, "\0");
-		fgets(str, MAX_BUFFER_SIZE, file);
-		if(!feof(file)) {
-
-		}
-	}
 
 
-}*/
+void deleteTask(circular_buffer *cb, int taskIndex) {
+    if (isEmpty(cb)) {
+        printf("Nema zadataka u bufferu.\n");
+        return;
+    }
+
+    // Validate taskIndex
+    if (taskIndex < 1 || taskIndex > cb->elementCounter) {
+        printf("Nevažeći indeks zadatka.\n");
+        return;
+    }
+
+    // Find the actual index in the buffer
+    int actualIndex = (cb->head + taskIndex - 1) % MAX_BUFFER_SIZE;
+
+    // Shift all tasks after the deleted task
+    for (int i = actualIndex; i != cb->tail; i = (i + 1) % MAX_BUFFER_SIZE) {
+        int nextIndex = (i + 1) % MAX_BUFFER_SIZE;
+        cb->tasks[i] = cb->tasks[nextIndex];
+    }
+
+    // Adjust the tail pointer and element count
+    cb->tail = (cb->tail - 1 + MAX_BUFFER_SIZE) % MAX_BUFFER_SIZE;
+    cb->elementCounter--;
+
+    printf("Zadatak na indeksu %d je obrisan.\n", taskIndex);
+}
+
+
+
 
 void loadTasksFromFile(circular_buffer *cb, const char *filename) {
     FILE *file = fopen(filename, "r");  // Open the file in read mode
