@@ -13,7 +13,7 @@ Provjera GCC kompajlera:
 ```sh
 gcc --version
 ```
-U slučaju da gcc nije instaliran, instalirajte ga pomoću (u ovom slučaju koristi se Ubuntu distribucija, *za drugu distribuciju ova komanda je drugačija*):
+U slučaju da gcc nije instaliran, instalirajte ga pomoću (u ovom slučaju koristi se Ubuntu distribucija, **za drugu distribuciju ova komanda je drugačija**):
 ```sh
 apt install gcc
 ```
