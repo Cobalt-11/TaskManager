@@ -1,12 +1,12 @@
 /.metadata/
 
 #Ignore build folders
-kv_project_pracny/bin/
+kv_projekt_pracny/bin/
 kv_project_pracny/obj/
 kv_project_pracny/lib/
 kv_project_pracny/Debug
 kv_project_pracny/Release/
-
+.vscode/
 
 #Ignore specific folders
 .settings/

@@ -87,7 +87,6 @@ void displayTasks(circular_buffer *cb) {
     }
 }
 
-
 void selectTask(circular_buffer *cb, int taskIndex, Task *selectedTask) {
     if (selectedTask == NULL) {
         printf("Neispravan zadatak.\n");
