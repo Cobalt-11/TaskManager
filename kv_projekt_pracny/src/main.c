@@ -8,10 +8,9 @@ int main() {
     circular_buffer cb;
     initialize(&cb);
 
-    // Load tasks from the file at the start
+    // Učitava file
     loadTasksFromFile(&cb, "tasks.txt");
 
-    // Your main menu loop
     while (1) {
         showMainMenu();
 
@@ -20,29 +19,27 @@ int main() {
 
         switch (choice) {
             case 1:
-                addTask(&cb);  // Add a new task
+                addTask(&cb); 
                 break;
             case 2:
-                displayTasks(&cb);  // Display tasks
+                displayTasks(&cb); 
                 break;
             case 3:
-                // Save tasks to file before exiting
                 saveTasksToFile(&cb, "tasks.txt");
                 printf("Izlazak iz programa...\n");
                 return 0;
             case 4: {
-                char confirm[3];  // Array to hold user input ("da" or "ne")
+                char confirm[3];  
                 printf("Da li sigurno hoćeš obrisati sve? Upiši da/ne: ");
                 scanf("%s", confirm);
 
-                // Check the user's input
                 if (strcmp(confirm, "da") == 0) {
-                    clearBuffer(&cb);  // Clear the buffer
+                    clearBuffer(&cb);  
                     printf("Buffer je izpražnjen\n");
                 } else {
                     printf("Povratak na glavni izbornik.\n");
                 }
-                break;  // Ensure we don't fall through to the next case
+                break; 
                 }
             case 5:
                 printf("Izlaz iz programa.\n");

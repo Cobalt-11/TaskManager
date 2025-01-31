@@ -3,7 +3,6 @@
 #include "task_manager.h"
 #include "circular_buffer.h"
 
-//Inicijalizira strukturu
 void initialize(circular_buffer *cb) {
     //cb -> tasks; netreba incijalizirait   
     cb -> elementCounter = 0;
@@ -11,7 +10,6 @@ void initialize(circular_buffer *cb) {
     cb -> tail = 0;
 }
 
-//Dodaje element u strukturu
 void addElement(circular_buffer *cb, Task *ts) {
 
     if(isFull(cb)) {
@@ -35,19 +33,17 @@ void removeElement(circular_buffer *cb, int isRemoved) {
     cb -> elementCounter--;
 }
 
-//Provjerava da li je struktura prazna
 int isEmpty(circular_buffer *cb) {
     return cb -> elementCounter == 0;
 }
 
-//Provjerava da li je struktura puna
 int isFull(circular_buffer *cb) {
     return cb -> elementCounter == MAX_BUFFER_SIZE;
 }
 
 
-//Popricaj s profesorom u vezi ovoga, da umjesto da mi pise 1 ili 2 da pise
-// ACTIVE ILI FINISHED
+// pomocna funkcija da ispisuje ime varijable umjesto numericke 
+// vrijednosti
 const char* getStatusString(TaskStatus tStatus) {
     switch (tStatus)
     {
@@ -57,7 +53,6 @@ const char* getStatusString(TaskStatus tStatus) {
     }
 }
 
-//Ispisuje buffer tj.strukturu
 void printBuffer(circular_buffer *cb) {
     if(isEmpty(cb)) {
         printf("Buffer je prazan.\n");
@@ -66,19 +61,19 @@ void printBuffer(circular_buffer *cb) {
 
     int index  = cb -> tail;
     for (int i = 0; i < cb -> elementCounter; i++) {
-        Task *t = &cb -> tasks[index]; // Fetch current task
-        formatTaskDisplay(t);  // Format and print task details
+        Task *t = &cb -> tasks[index];
+        formatTaskDisplay(t); 
 
-        index = (index + 1) % MAX_BUFFER_SIZE; // Move to next task
+        index = (index + 1) % MAX_BUFFER_SIZE;
     }
 }
 
 
 Task* getElement(circular_buffer *cb, int index) {
     if (index < 0 || index >= cb -> elementCounter) {
-        return NULL; // Vraća NULL ako je indeks izvan granica
+        return NULL; 
     }
-    int actualIndex = (cb->tail + index) % MAX_BUFFER_SIZE; // Izračun pravog indeksa
+    int actualIndex = (cb->tail + index) % MAX_BUFFER_SIZE; 
     return &cb->tasks[actualIndex];
 }
 
@@ -92,27 +87,24 @@ int getCount(circular_buffer *cb) {
 #include <stdio.h>
 
 void clearBuffer(circular_buffer *cb) {
-    // Reset the buffer
     cb->head = 0;
     cb->tail = 0;
     cb->elementCounter = 0;
 
-    // Open the file in write mode to truncate its contents (but not delete the file)
     FILE *file = fopen("tasks.txt", "w");
     if (file == NULL) {
         printf("Error opening file tasks.txt\n");
         return;
     }
-    fclose(file);  // Just close the file to clear its contents
+    fclose(file);  
 
-    // Now delete the file
+
     if (remove("tasks.txt") == 0) {
         printf("Tasks deleted successfully.\n");
     } else {
         printf("Error deleting tasks\n");
     }
 
-    // Assuming TRUE indicates successful operation
     printf("Buffer cleared and tasks deleted.\n");
 }
 

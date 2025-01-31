@@ -4,8 +4,6 @@
 #include <ctype.h>
 #include "task_manager.h"
 
-// Funkcija za glavni meni
-//treba viditi da li je ovo ovako oke?
 
 // potencijano dodati izborni meni koji se dobije tek kada odaberem task iz liste
 //npr imam 3 taska --> odaberem 2. task i onda mi samo njega ispise na meni, i ako je active da mi ponudi opciju
@@ -21,7 +19,6 @@ void showMainMenu() {
     printf("Odabir: ");
 }
 
-// Funkcija za unos novog zadatka
 void addTask(circular_buffer *cb) {
     if (isFull(cb)) {
         printf("Buffer je pun! Ne možete dodati novi zadatak.\n");
@@ -29,8 +26,10 @@ void addTask(circular_buffer *cb) {
     }
 
     Task newTask;
+
     printf("Unesite naslov zadatka (maks. %d znakova): ", MAX_TITLE_LENGTH);
     scanf(" %[^\n]", newTask.title); // Učitavanje stringa s razmakom
+
     printf("Odaberite prioritet (1 - LOW, 2 - MEDIUM, 3 - HIGH): ");
     int priority;
     scanf("%d", &priority);
@@ -38,6 +37,7 @@ void addTask(circular_buffer *cb) {
 
     printf("Unesite dan: ");
     scanf("%hd", &newTask.day);
+    
     printf("Unesite mjesec: ");
     scanf("%hd", &newTask.month);
 
@@ -46,21 +46,20 @@ void addTask(circular_buffer *cb) {
     scanf("%d", &status);
     newTask.status = (TaskStatus)status;
 
-    addElement(cb, &newTask); // Dodavanje zadatka u kružni buffer
+    addElement(cb, &newTask);
     printf("Zadatak uspješno dodan.\n");
 }
 
-// Funkcija za prikaz zadataka
 void displayTasks(circular_buffer *cb) {
     if (isEmpty(cb)) {
         printf("Nema zadataka za prikaz.\n");
         return;
     }
 
-    sortTasksByPriority(cb); //Sortiranje prije ispisa
+    sortTasksByPriority(cb); 
 
     printf("\n===== Zadaci =====\n");
-    printBuffer(cb); // Koristi funkciju za ispis zadataka
+    printBuffer(cb); 
     printf("==================\n");
 
     while (1) {
@@ -68,26 +67,22 @@ void displayTasks(circular_buffer *cb) {
         printf("Odaberite broj zadatka (0 za povratak): ");
         scanf("%d", &taskIndex);
 
-        // Povratak u glavni meni
         if (taskIndex == 0) {
             printf("Povratak u glavni meni.\n");
             break;
         }
 
-        // Provjera je li unos ispravan
         if (taskIndex <= 0 || taskIndex > getCount(cb)) {
             printf("Neispravan odabir. Pokušajte ponovo.\n");
             continue;
         }
 
-        // Dohvaćanje odabranog zadatka
         Task *selectedTask = getElement(cb, taskIndex - 1); // Indeksiranje od 0
         if (selectedTask == NULL) {
             printf("Došlo je do greške prilikom dohvaćanja zadatka.\n");
             continue;
         }
 
-        // Prikaz detalja odabranog zadatka
         selectTask(cb, taskIndex, selectedTask);
     }
 }
@@ -130,9 +125,9 @@ void selectTask(circular_buffer *cb, int taskIndex, Task *selectedTask) {
             case 2:
                 deleteTask(cb, taskIndex);
             	printf("Zadatak uspješno obrisan");
-                return; // Exit after deleting the task
+                return; 
             case 3:
-                return; // Exit to the previous menu
+                return; 
             default:
                 printf("Nevažeći odabir. Pokušajte ponovo.\n");
         }
@@ -161,7 +156,7 @@ void markTaskCompleted(Task *task) {
 // POMOCNE FUNKCIJE
 
 int validateDate(const char* date) {
-    //Provjeri da li je datum u korektnom formatu
+
     if (strlen(date) != 10) return 0; // Duzina datuma bi trebala biti 10 
 
     if (date[4] != '-' || date[7] != '-') return 0;
@@ -215,7 +210,7 @@ int comparePriority(const void* a, const void* b) {
     Task *taskA = (Task*)a;
     Task *taskB = (Task*)b;
 
-    return taskB->priority - taskA->priority; // Sortiranje u padajucem redoslijedu
+    return taskB->priority - taskA->priority; // padajuci redoslijed
 }
 
 void sortTasksByPriority(circular_buffer *cb) {
@@ -228,20 +223,18 @@ void sortTasksByPriority(circular_buffer *cb) {
     printf("Zadaci su uspješno sortirani prema prioritetu.\n");
 }
 
-//Funckije za spremanje i učitavanje Task-ova iz file-a
 void saveTasksToFile(circular_buffer *cb, const char *filename) {
     if (isEmpty(cb)) {
         printf("Nema zadataka u bufferu.\n");
         return;
     }
 
-    FILE *file = fopen(filename, "w");  //Otvara file u "write" modu
+    FILE *file = fopen(filename, "w");  
     if (file == NULL) {
         printf("Nemoguce otvoriti file!\n");
         return;
     }
 
-    // Zapis svih novih taskova
     int index = cb->tail;
     for (int i = 0; i < cb->elementCounter; i++) {
         Task *task = &cb->tasks[index];
@@ -266,16 +259,13 @@ void deleteTask(circular_buffer *cb, int taskIndex) {
         return;
     }
 
-    // Find the actual index in the buffer
     int actualIndex = (cb->head + taskIndex - 1) % MAX_BUFFER_SIZE;
 
-    // Shift all tasks after the deleted task
     for (int i = actualIndex; i != cb->tail; i = (i + 1) % MAX_BUFFER_SIZE) {
         int nextIndex = (i + 1) % MAX_BUFFER_SIZE;
         cb->tasks[i] = cb->tasks[nextIndex];
     }
 
-    // Adjust the tail pointer and element count
     cb->tail = (cb->tail - 1 + MAX_BUFFER_SIZE) % MAX_BUFFER_SIZE;
     cb->elementCounter--;
 
@@ -297,7 +287,7 @@ void loadTasksFromFile(circular_buffer *cb, const char *filename) {
     short day, month, status;
 
     while (fscanf(file, "%[^,],%d,%hd,%hd,%hd\n", title, &priority, &day, &month, &status) == 5) {
-        // Prepare the task to be added
+
         Task newTask;
         strncpy(newTask.title, title, MAX_TITLE_LENGTH);
         newTask.priority = (priorityLevel)priority;
@@ -305,7 +295,6 @@ void loadTasksFromFile(circular_buffer *cb, const char *filename) {
         newTask.month = month;
         newTask.status = (TaskStatus)status;
 
-        // Add the task to the buffer
         addElement(cb, &newTask);
     }
 

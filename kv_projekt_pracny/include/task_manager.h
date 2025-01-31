@@ -23,17 +23,18 @@ void markTaskCompleted(Task *task);
 void deleteTask(circular_buffer *cb, int taskIndex);
 
 //pomocne funkcije
-// Validation function for date format (YYYY-MM-DD)
+// Funkcija za provjeru ispravnog datuma
 int validateDate(const char* date);
 
-// Validation function for user input (checks for valid integers, strings, etc.)
+// Funkcija za provjeru ispravnog upisa
 int validateInput(const char* input, int type);
 
-// Function to format and display task details neatly
+// Funkcija za formatiranje zadataka
 void formatTaskDisplay(Task* task);
 
-// Function to sort tasks by priority (ascending order)
+// Funkcija za sortiranje zadataka po prioritetu
 void sortTasksByPriority();
+
 
 int getCount(circular_buffer *cb);
 

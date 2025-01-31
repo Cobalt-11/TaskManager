@@ -9,4 +9,4 @@ gcc -O3 -Wall -I./include -c ./src/main.c -o ./obj/main.o
 ar rcs ./lib/lib_project.a ./obj/circular_buffer.o ./obj/task_manager.o ./obj/main.o
 
 # Link object files and static library to create executable
-gcc -O3 -Wall -I./include -o ./bin/Run ./obj/main.o ./lib/libkv_project.a
+gcc -O3 -Wall -I./include -o ./bin/Run ./obj/main.o ./lib/lib_project.a
