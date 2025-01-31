@@ -1,4 +1,3 @@
----
 # Task Manager - Implementacija sustava za pamćenje zadataka s kružnim bufferom
 
 ## 1. Naslovna stranica
@@ -96,27 +95,43 @@ Pokretanje aplikacije:
 ./bin/Run
 ```
 
-## 5. Tehnički detalji
+---
 
-### 5.1. Opis podataka
-- **Struktura buffera** – Polje struktura zadataka (20 elemenata), pokazivači `head` i `tail`, brojač trenutnog broja zadataka.
-- **Struktura zadatka** – Naslov, prioritet, datum isteka, status.
+## 4. TEHNIČKI DETALJI
+Unutar datoteka zaglavlja (`circular_buffer.h` i `task_manager.h`), deklarirane su sve funkcije i strukture podataka koje se koriste kroz ovaj projekt. Projekt koristi kružni buffer kako bi se ostvarila organizacija podataka o zadacima.
 
-### 5.2. Glavne funkcije
-- `initBuffer()` – Inicijalizacija buffera.
-- `addTask()` – Dodavanje novog zadatka.
-- `removeTask()` – Uklanjanje najstarijeg zadatka.
-- `printTasks()` – Ispis trenutnih zadataka.
-- `isEmpty()` / `isFull()` – Provjera statusa buffera.
+Glavne strukture:
+- **Tasks** – Sadrži sve podatke vezane za zadatke.
+- **Circular Buffer** – Sadrži strukturu `Tasks`, količinu elemenata i pokazivače na `head` i `tail`.
 
-### 5.3. Važni algoritmi
-- **Kružni buffer** – Efikasna struktura podataka koja koristi pokazivače za optimizaciju dodavanja i uklanjanja elemenata.
+### 4.1. Funkcije
+**U `circular_buffer.h`:**
+- `void initialize(circular_buffer *cb);` – Inicijalizira strukturu
+- `void addElement(circular_buffer *cb, Task *ts);` – Dodaje element u strukturu
+- `int isEmpty(circular_buffer *cb);` – Provjerava je li struktura prazna
+- `int isFull(circular_buffer *cb);` – Provjerava je li struktura puna
+- `void printBuffer(circular_buffer *cb);` – Ispisuje buffer
+- `void clearBuffer(circular_buffer *cb);` – Čisti cijeli buffer
+
+**U `task_manager.h`:**
+- `void showMainMenu();` – Funkcija za glavni meni
+- `void addTask();` – Funkcija za unos novog zadatka
+- `void displayTasks(circular_buffer *cb);` – Funkcija za prikaz zadataka
+- `void selectTask(circular_buffer *cb, int taskIndex, Task *task);` – Funkcija za odabir zadatka
+- `void markTaskCompleted(Task *task);` – Funkcija za označavanje zadatka kao završenog
+- `void deleteTask(circular_buffer *cb, int taskIndex);` – Funkcija za brisanje zadatka
+
+**Ključni algoritmi:**
+- **Kružni buffer** – Omogućuje efikasno dodavanje i uklanjanje elemenata.
 - **Sortiranje po prioritetu** – Omogućuje ispis zadataka prema važnosti.
 
-## 6. Zaključak
+---
 
-Projekt "Task Manager" omogućuje efikasno upravljanje zadacima koristeći kružni buffer. Implementacija osigurava optimizirano korištenje memorije, jednostavnost korištenja i modularnost koda.
+## 5. ZAKLJUČAK
+Projekt **Task Manager** omogućuje efikasno upravljanje zadacima koristeći kružni buffer. Implementacija osigurava optimizirano korištenje memorije, jednostavnost korištenja i modularnost koda.
 
 **Moguća buduća poboljšanja:**
 - Dodavanje grafičkog sučelja za korisnike.
 - Dodavanje algoritama pretraživanja i filtriranja zadataka.
+
+---
