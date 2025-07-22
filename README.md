@@ -4,7 +4,7 @@
 
 Za preuzimanje izvornog koda koristite naredbu:
 ```sh
-git clone [https://gitlab.com/dock7713840/np_kv_projekt24.git](https://github.com/Cobalt-11/TaskManager.git)
+git clone https://github.com/Cobalt-11/TaskManager.git
 cd np_kv_projekt24
 cd kv_projekt_pracny
 ```
